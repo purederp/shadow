@@ -1,53 +1,110 @@
+var i = 0;
+var furniture = [];
+var elements = [];
+   
+   
+   
+
+/**Helper**/
+function pick(arg, def) {
+   return (typeof arg == 'undefined' ? def : arg);
+}
+
+
 /**Descriptor for items free standing items**/
-function roomFurnitureDescriptor(description, imagefile, probability){
+function RoomFurnitureDescriptor(description, imagefile, probability, holds){
+   this.description = description; // Name
+   this.image = imagefile; //Path to image
+   this.probability = probability; //0 to 1
+   this.holds = pick(holds,0);
+   
+   
+}/**Descriptor for items requiring tables/desks**/
+function RoomElementDescriptor(description, imagefile, probability){
    this.description = description; // Name
    this.image = imagefile; //Path to image
    this.probability = probability; //0 to 1
 }
 
+function RoomFurniture(RoomFurnitureDescriptor){
 
-/**Descriptor for items which sit on tables & desks.**/
-function furnitureElementsDescriptor(description, imagefile, probability){
-   this.description = description;
-   this.imagefile = imagefile;
-   this.probability = probability;
+
+
 }
 
+function RoomElement(RoomFurnitureDescriptor){
+
+
+}
+
+
 function setUpItems(){
-   var i = 0;
-   var furniture = [];
-   furniture[i++] = new roomFurnitureDescriptor("Rug","",0.5);
-   furniture[i++] = new roomFurnitureDescriptor("Lamp","",0.5);
-   furniture[i++] = new roomFurnitureDescriptor("Drawers","",0.5);
-   furniture[i++] = new roomFurnitureDescriptor("Chair","",0.5);
-   furniture[i++] = new roomFurnitureDescriptor("Bookshelf","",0.5);
-   furniture[i++] = new roomFurnitureDescriptor("Stool","",0.5);
+   furniture[i++] = new RoomFurnitureDescriptor("Rug","",0.5);
+   furniture[i++] = new RoomFurnitureDescriptor("Lamp","",0.5);
+   furniture[i++] = new RoomFurnitureDescriptor("Drawers","",0.5,2);
+   furniture[i++] = new RoomFurnitureDescriptor("Chair","",0.5);
+   furniture[i++] = new RoomFurnitureDescriptor("Bookshelf","",0.5);
+   furniture[i++] = new RoomFurnitureDescriptor("Stool","",0.5);
    
-   furniture[i++] = new roomFurnitureDescriptor("Bed","",0.33);
-   furniture[i++] = new roomFurnitureDescriptor("Coffee Table","",0.33);
-   furniture[i++] = new roomFurnitureDescriptor("Desk","",0.33);
+   furniture[i++] = new RoomFurnitureDescriptor("Bed","",0.33);
+   furniture[i++] = new RoomFurnitureDescriptor("Coffee Table","",0.33,2);
+   furniture[i++] = new RoomFurnitureDescriptor("Desk","",0.33,2);
    
-   furniture[i++] = new roomFurnitureDescriptor("Plant","",0.25);
-   furniture[i++] = new roomFurnitureDescriptor("Clock","",0.25);
+   furniture[i++] = new RoomFurnitureDescriptor("Plant","",0.25);
+   furniture[i++] = new RoomFurnitureDescriptor("Clock","",0.25);
    
-   furniture[i++] = new roomFurnitureDescriptor("Couch","",0.1);
-   furniture[i++] = new roomFurnitureDescriptor("Statue","",0.1);
-   furniture[i++] = new roomFurnitureDescriptor("Painting","",0);
+   furniture[i++] = new RoomFurnitureDescriptor("Couch","",0.1);
+   furniture[i++] = new RoomFurnitureDescriptor("Statue","",0.1);
+   furniture[i++] = new RoomFurnitureDescriptor("Painting","",-1);
    
    
-   furniture[i++] = new furnitureElementsDescriptor("Telephone","",0.1);
-   furniture[i++] = new furnitureElementsDescriptor("Cup","",0);
-   furniture[i++] = new furnitureElementsDescriptor("Globe","",0);
-   furniture[i++] = new furnitureElementsDescriptor("Desk lamp","",0.1);
+   elements[i++] = new RoomElementDescriptor("Telephone","",0.1);
+   elements[i++] = new RoomElementDescriptor("Cup","",-1);
+   elements[i++] = new RoomElementDescriptor("Globe","",-1);
+   elements[i++] = new RoomElementDescriptor("Desk lamp","",0.1);
+   elements[i++] = new RoomElementDescriptor("TV","",0.1);
 }
 
 /**Need to make all rooms at once, to guarentee that special items will exist someone**/
 function GenRooms(){
-
+   var i;
+   var rooms = [];
+   for(i = 0; i < number_of_rooms; i++){
+      rooms[i] = new Room();
+   }
+   
+   //Pick which room gets the special items. These are marked with '-1' as the probability
+   //furniture
+   for(i = 0; i < furniture.length ; i++){
+      if(furniture[i].probability < 0){
+         var roomNum = Math.floor(Math.random() * number_of_rooms;
+         rooms[roomNum].furniture.push(new RoomFurniture(furniture[i]));
+   }
+   //elements
+   for(i = 0; i < furniture.length ; i++){
+      if(furniture[i].probability < 0){
+         var roomNum = Math.floor(Math.random() * number_of_rooms;
+         rooms[roomNum].furniture.push(new RoomFurniture(furniture[i]));
+   }
 }
 
 
 
-function Room(baseElements){
-   this.
-function makeRooms()
+function Room(){
+   this.backround = null;
+   this.furniture = [];
+   this.elements = [];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
