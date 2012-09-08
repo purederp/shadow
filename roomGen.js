@@ -23,8 +23,8 @@ function RoomFurnitureDescriptor(itemWidth,itemHeight,yOffset,description, image
    this.imagefile = imagefile; //Path to image
    this.probability = probability; //0 to 1
    this.holds = pick(holds,0);
-   this.width = 100;
-   this.height = 50;
+   this.width = itemWidth;
+   this.height = itemHeight;
    this.yOffset = yOffset;
    
    
@@ -35,8 +35,8 @@ function RoomElementDescriptor(itemWidth,itemHeight,description, imagefile, prob
    this.description = description; // Name
    this.imagefile = imagefile; //Path to image
    this.probability = probability; //0 to 1
-   this.width = 10;
-   this.height = 20;
+   this.width = itemWidth;
+   this.height = itemHeight;
 }
 
 function RoomFurniture(item){
@@ -58,10 +58,10 @@ function RoomFurniture(item){
          .image(this.furnitureDescriptor.imagefile);
       if(this.attachedElements == 1){
          /**Pass centerX, and bottom y for the element to draw at**/
-         this.elements[0].draw(this.index * length_of_rooms + pxOffset + this.furnitureDescriptor.width/2, worldHeight - this.furnitureDescriptor.height);
+         this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/2, worldHeight - this.furnitureDescriptor.height);
       }else if(this.attachedElements == 2){
-         this.elements[0].draw(this.index * length_of_rooms + pxOffset + this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height);
-         this.elements[1].draw(this.index * length_of_rooms + pxOffset + 3*this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height);
+         this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height);
+         this.elements[1].draw(roomIndex * length_of_rooms + pxOffset + 3*this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height);
       } //Else, nothjing attached. Is one, or two.
       return this.furnitureDescriptor.width + pxOffset;
    }
@@ -77,7 +77,7 @@ function RoomElement(item){
       this.craftyEntity = Crafty.e("2D, DOM, Image")
          .attr({
             x: xCenter - this.elementDescriptor.width/2, 
-            y: worldHeight - this.elementDescriptor.height, 
+            y: yBottom - this.elementDescriptor.height, 
             w: this.elementDescriptor.width, 
             h: this.elementDescriptor.height})
          .image(this.elementDescriptor.imagefile);
