@@ -1,0 +1,64 @@
+<html>
+   <head>
+      <title>
+         Test page
+      </title>
+      <script type="text/javascript" src="crafty.js"></script>
+   </head>
+   <body>
+      <script type="text/javascript">
+         /** Game settings **/
+          var number_of_rooms = 10;
+          var length_of_rooms = 1200;
+          var total_length = number_of_rooms * length_of_rooms;
+          var height = 300;
+          var viewport_width = 900;
+          var player_height = 130;
+          var player_width = 50
+         /**END Game settings**/ 
+           
+           
+           
+           
+         /**Scene, vieport settings**/
+         Crafty.init(total_length, height);
+         Crafty.viewport.init(viewport_width, height);
+         /**END scene**/
+
+         /**Only enable for debugging**/
+         Crafty.viewport.mouselook(true);
+         /**End debugging**/
+         
+         /**Player element**/
+         var player = Crafty.e("2D, Canvas, Twoway, Gravity, Image")
+                     .attr({x: 0, y: 0, w: player_width, h: player_height}) // for Component 2D
+                     //.color("#FF0000") // for Component Color - replace with sprite
+                     .image("./images/char.gif");
+                     .twoway(5,5) // horizontal speed, jump speed
+                     .gravity("platform");
+         //Make viewport follow player - Not placed in viewport as player object doesn't exist at that point.         
+         Crafty.viewport.follow(player,10, height/2);
+         
+         /**End player**/
+         
+         
+         /**Bottom of world - stop us falling off**/
+         var base = Crafty.e("2D, Canvas, Color, platform")
+                     .attr({x: 0, y: height-1, w: total_length, h:1})
+                     .color("#000022");
+         /**End bottom of world**/
+                     
+         // var markerblocks[];
+         var i = 0;
+         for(i = 0; i *100 < total_length ;i++ ){
+         Crafty.e("2D, Canvas, Color")
+                   .attr({x: i * 100 , y: 140, w: 20, h: 20}) // for Component 2D
+                   .color("#111100"); // for Component Color
+                   //.gravity("platform");
+         }
+
+	   </script>
+         
+   
+   </body>
+</html>
