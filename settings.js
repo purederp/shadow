@@ -7,4 +7,5 @@
  var viewport_width = 900;
  var player_height = 130;
  var player_width = 50;
+ var floor_height = 67;
 /**END Game settings**/ 

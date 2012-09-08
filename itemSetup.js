@@ -43,10 +43,14 @@ function setUpItems(){
 
 function setUpBackgrounds(){
    var i = 0;
-   backgrounds[i++] = "./assets/backgrounds/black.jpg";
-   backgrounds[i++] = "./assets/backgrounds/blue.jpg";
-   backgrounds[i++] = "./assets/backgrounds/green.jpg";
-   backgrounds[i++] = "./assets/backgrounds/red.jpg";
-   backgrounds[i++] = "./assets/backgrounds/teal.jpg";
-   backgrounds[i++] = "./assets/backgrounds/yellow.jpg"; 
+   backgrounds[i++] = "./images/rooms/room0.png"; 
+   backgrounds[i++] = "./images/rooms/room1.png"; 
+   backgrounds[i++] = "./images/rooms/room2.png"; 
+   backgrounds[i++] = "./images/rooms/room3.png"; 
+   backgrounds[i++] = "./images/rooms/room4.png"; 
+   backgrounds[i++] = "./images/rooms/room5.png"; 
+   backgrounds[i++] = "./images/rooms/room6.png"; 
+   backgrounds[i++] = "./images/rooms/room7.png"; 
+   backgrounds[i++] = "./images/rooms/room8.png"; 
+   backgrounds[i++] = "./images/rooms/room9.png"; 
 }

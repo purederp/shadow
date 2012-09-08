@@ -52,16 +52,16 @@ function RoomFurniture(item){
       this.craftyEntity = Crafty.e("2D, DOM, Image")
          .attr({
             x: roomIndex * length_of_rooms + pxOffset, 
-            y: worldHeight - this.furnitureDescriptor.height, 
+            y: worldHeight - this.furnitureDescriptor.height - floor_height, 
             w: this.furnitureDescriptor.width, 
             h: this.furnitureDescriptor.height})
          .image(this.furnitureDescriptor.imagefile);
       if(this.attachedElements == 1){
          /**Pass centerX, and bottom y for the element to draw at**/
-         this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/2, worldHeight - this.furnitureDescriptor.height);
+         this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/2, worldHeight - this.furnitureDescriptor.height - floor_height);
       }else if(this.attachedElements == 2){
-         this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height);
-         this.elements[1].draw(roomIndex * length_of_rooms + pxOffset + 3*this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height);
+         this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
+         this.elements[1].draw(roomIndex * length_of_rooms + pxOffset + 3*this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
       } //Else, nothjing attached. Is one, or two.
       return this.furnitureDescriptor.width + pxOffset;
    }
@@ -178,7 +178,7 @@ function GenRooms(){
       }
    
    rooms[i].draw();
-   console.log("Drew room " +i);
+   console.log("Drew room " +i + " Background is "+ rooms[i].background);
    }
 }
 
