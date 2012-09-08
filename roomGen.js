@@ -118,8 +118,8 @@ function GenRooms(){
       //Should use permututations to walk through the furniture array, so we dont' bias toward furniture first in the list
       if(rooms[i].spareElementPlaces<0){
          for(j = 0; j < rooms[i].elements.length ; j++){
-            if(furniture[j].holds > 0){
-               rooms[i].furniture.push(new RoomFurniture(furniture[j]));
+            if(furnitureDescriptors[j].holds > 0){
+               rooms[i].furniture.push(new RoomFurniture(furnitureDescriptors[j]));
             }
          }
       }

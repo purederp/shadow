@@ -24,13 +24,19 @@
          /**Make rooms**/
          GenRooms(); //FUUUUUUUUUUUU
          
+         Crafty.sprite(135, "images/charSpriteSheet.jpg", {
+             player: [0, 0]
+         });
+         
          /**Player element**/
-         var player = Crafty.e("2D, Canvas, Twoway, Gravity, Image")
+         var player = Crafty.e("2D, Canvas,player, SpriteAnimation, Twoway, Gravity, Image")
                      .attr({x: 0, y: 0, w: player_width, h: player_height}) // for Component 2D
                      //.color("#FF0000") // for Component Color - replace with sprite
-                     .image("./images/char.gif")
+                     // .image("./images/char.gif")
                      .twoway(5,5) // horizontal speed, jump speed
-                     .gravity("platform");
+                     .gravity("platform")
+                     .animate("playerWalk",0,0,3)
+                     .animate("playerWalk",20,-1);
          //Make viewport follow player - Not placed in viewport as player object doesn't exist at that point.         
          Crafty.viewport.follow(player,10, height/2);
          
