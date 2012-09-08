@@ -63,7 +63,7 @@ function RoomFurniture(item){
          this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
          this.elements[1].draw(roomIndex * length_of_rooms + pxOffset + 3*this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
       } //Else, nothjing attached. Is one, or two.
-      return this.furnitureDescriptor.width + pxOffset;
+      return this.furnitureDescriptor.width; //+ pxOffset;
    }
       
 
@@ -96,9 +96,42 @@ function Room(index){
       this.craftyEntity = Crafty.e("2D, DOM, Image")
          .attr({x: this.index * length_of_rooms, y: 0, w: length_of_rooms, h: height})
          .image(this.background)
-      var furniturePos = 0;
+         
+      /**For randomly placing furniture, we need ot know how much spare space we have.
+         Will deidcate half of this to be minimum spacing between elements, and use the
+         other half as a pool of space to pick random amount from.**/
+      var totalFurnitureWidth = 0;
+      var spareSpace = 0;
+      var randSpacePool = 0;
+      /**Number of times we've drawn from the rand pool. Max this.furniture.length +1, but has capacity in ppol for +2. the last draw would just push us
+      to the boundary of the room, ie, is the spacing to the end, so there is no need ot draw it, as we just advance to the next room.
+      **/
+      var randPoolDraws = 0; 
+      var elementSpacing = 0;
+      for(i = 0; i <  this.furniture.length; i++){
+         totalFurnitureWidth += this.furniture[i].furnitureDescriptor.width;
+      }
+      alert("total furniture width for room " + this.index + ": " + totalFurnitureWidth);
+      spareSpace = total_length - totalFurnitureWidth;
+      elementSpacing = spareSpace/(2 * (this.furniture.length + 2)); //+2 for start and end of room spacing
+      alert("Per element space for room " + this.index + ": " + elementSpacing);
+      alert("#furniture for room " + this.index + ": " + this.furniture.length);
+      randSpacePool = spareSpace/2;
+      randSpace = Math.floor(Math.random()*(randSpacePool/(this.furniture.length - randPoolDraws)));
+      randSpacePool -= randSpace;
+      alert("Random draw space for room " + this.index + ": " + randSpace);
+      
+      var furniturePos = elementSpacing + randSpace;
       for(i = 0; i <  this.furniture.length; i++){
          furniturePos+= this.furniture[i].draw(this.index,furniturePos); //move the position to draw furniture by this amount
+         
+         randSpace = Math.floor(Math.random()*(randSpacePool/(this.furniture.length - randPoolDraws)));
+         randSpacePool -= randSpace;
+         furniturePos+= randSpace + elementSpacing;
+         
+         if(furniturePos>1200){
+            alert("Josh should fix the furniture positiioning!" + furniturePos + ", At room: " + index, ", Element " + i + "/" + this.furniture.length);
+         }
       }
    }
 }
@@ -121,7 +154,7 @@ function GenRooms(){
    //Pick which room gets the special items. These are marked with '-1' as the probability
    //furniture
    for(i = 0; i < furnitureDescriptors.length ; i++){
-      if(furnitureDescriptors[i].probability < 0){
+      if(furnitureDescriptors[i].probability < 0){                //Probability <0 implies is a special item
          var roomNum = Math.floor(Math.random() * number_of_rooms);
          rooms[roomNum].furniture.push(new RoomFurniture(furnitureDescriptors[i]));
       }
@@ -129,7 +162,7 @@ function GenRooms(){
    
    //elements
    for(i = 0; i < elementDescriptors.length ; i++){
-      if(elementDescriptors[i].probability < 0){
+      if(elementDescriptors[i].probability < 0){                //Probability <0 implies is a special item
          var roomNum = Math.floor(Math.random() * number_of_rooms);
          rooms[roomNum].elements.push(new RoomElement(elementDescriptors[i]));
          rooms[roomNum].spareElementPlaces--; //one less space an a desk, etc to sit.
@@ -178,7 +211,7 @@ function GenRooms(){
       }
    
    rooms[i].draw();
-   console.log("Drew room " +i);
+   console.log("Drew room " +i + " Background is "+ rooms[i].background);
    }
 }
 
