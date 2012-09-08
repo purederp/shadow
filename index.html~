@@ -29,11 +29,13 @@
          Crafty.viewport.mouselook(true);
          /**End debugging**/
          
+         
+         
          /**Player element**/
          var player = Crafty.e("2D, Canvas, Twoway, Gravity, Image")
                      .attr({x: 0, y: 0, w: player_width, h: player_height}) // for Component 2D
                      //.color("#FF0000") // for Component Color - replace with sprite
-                     .image("./images/char.gif");
+                     .image("./images/char.gif")
                      .twoway(5,5) // horizontal speed, jump speed
                      .gravity("platform");
          //Make viewport follow player - Not placed in viewport as player object doesn't exist at that point.         
@@ -47,7 +49,8 @@
                      .attr({x: 0, y: height-1, w: total_length, h:1})
                      .color("#000022");
          /**End bottom of world**/
-                     
+              
+         /**More debugging stuff   **/    
          // var markerblocks[];
          var i = 0;
          for(i = 0; i *100 < total_length ;i++ ){
