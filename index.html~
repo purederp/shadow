@@ -6,12 +6,11 @@
       <script type="text/javascript" src="crafty.js"></script>
       <script type="text/javascript" src="settings.js"></script>
       <script type="text/javascript" src="roomGen.js"></script>
+      <script type="text/javascript" src="itemSetup.js"></script>
    </head>
    <body>
       <script type="text/javascript">
-           
-           
-           
+         var i = 0;
            
          /**Scene, vieport settings**/
          Crafty.init(total_length, height);
@@ -43,6 +42,16 @@
                      .attr({x: 0, y: height-1, w: total_length, h:1})
                      .color("#000022");
          /**End bottom of world**/
+              
+         /**More debugging stuff   **/    
+         // var markerblocks[];
+         for(i = 0; i *100 < total_length ;i++ ){
+         Crafty.e("2D, Canvas, Color")
+                   .attr({x: i * 100 , y: 140, w: 20, h: 20}) // for Component 2D
+                   .color("#111100"); // for Component Color
+                   //.gravity("platform");
+         }
+	   </script>
          
    
    </body>
