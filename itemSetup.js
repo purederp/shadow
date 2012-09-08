@@ -6,9 +6,9 @@
 /** Furniture and things that sit on furniture**/
 function setUpItems(){
    var i = 0;
-   //furnitureDescriptors[i++] = new RoomFurnitureDescriptor(150,30,-1,"Rug","images/furniture/rug0.png",0.5/3);
-   //furnitureDescriptors[i++] = new RoomFurnitureDescriptor(152,49,-1,"Rug","images/furniture/rug1.png",0.5/3);
-   //furnitureDescriptors[i++] = new RoomFurnitureDescriptor(173,44,-1,"Rug","images/furniture/rug2.png",0.5/3);
+   furnitureDescriptors[i++] = new RoomFurnitureDescriptor(150,30,-1,"Rug","images/furniture/rug0.png",0.5/3);
+   furnitureDescriptors[i++] = new RoomFurnitureDescriptor(152,49,-1,"Rug","images/furniture/rug1.png",0.5/3);
+   furnitureDescriptors[i++] = new RoomFurnitureDescriptor(173,44,-1,"Rug","images/furniture/rug2.png",0.5/3);
    furnitureDescriptors[i++] = new RoomFurnitureDescriptor(30,115,0,"Lamp","images/furniture/lamp0.png",0.5);
    furnitureDescriptors[i++] = new RoomFurnitureDescriptor(76,51,0,"Drawers","images/furniture/drawer0.png",0.5/3,2);
    furnitureDescriptors[i++] = new RoomFurnitureDescriptor(114,71,0,"Drawers","images/furniture/drawer1.png",0.5/3,2);
@@ -29,7 +29,7 @@ function setUpItems(){
    
    furnitureDescriptors[i++] = new RoomFurnitureDescriptor(158,85,0,"Couch","images/furniture/sofa0.png",0.1);
 //   furnitureDescriptors[i++] = new RoomFurnitureDescriptor(20,20,0,"Statue","images/furniture/.png",0.1);
-   furnitureDescriptors[i++] = new RoomFurnitureDescriptor(39,60,0,"Painting","images/furniture/painting0.png",-1);
+   furnitureDescriptors[i++] = new RoomFurnitureDescriptor(39,60,1,"Painting","images/furniture/painting0.png",-1);
    
    i = 0;
    elementDescriptors[i++] = new RoomElementDescriptor(29,23,"Telephone","images/elements/phone.png",0.1);

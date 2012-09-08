@@ -49,20 +49,43 @@ function RoomFurniture(item){
    this.draw = function(roomIndex, pxOffset){ 
       //alert("Drawing some furniture");
       //alert(pick(this.furnitureDescriptor.imagefile,"NOPE"));
-      this.craftyEntity = Crafty.e("2D, DOM, Image")
-         .attr({
-            x: roomIndex * length_of_rooms + pxOffset, 
-            y: worldHeight - this.furnitureDescriptor.height - floor_height, 
-            w: this.furnitureDescriptor.width, 
-            h: this.furnitureDescriptor.height})
-         .image(this.furnitureDescriptor.imagefile);
-      if(this.attachedElements == 1){
-         /**Pass centerX, and bottom y for the element to draw at**/
-         this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/2, worldHeight - this.furnitureDescriptor.height - floor_height);
-      }else if(this.attachedElements == 2){
-         this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
-         this.elements[1].draw(roomIndex * length_of_rooms + pxOffset + 3*this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
-      } //Else, nothjing attached. Is one, or two.
+      if(this.furnitureDescriptor.yOffset == 0){
+         this.craftyEntity = Crafty.e("2D, DOM, Image")
+            .attr({
+               x: roomIndex * length_of_rooms + pxOffset, 
+               y: worldHeight - this.furnitureDescriptor.height - floor_height, 
+               w: this.furnitureDescriptor.width, 
+               h: this.furnitureDescriptor.height})
+            .image(this.furnitureDescriptor.imagefile);
+         if(this.attachedElements == 1){
+            /**Pass centerX, and bottom y for the element to draw at**/
+            console.log("Room " + roomIndex + " Has furniture " + this.furnitureDescriptor.description +"+" + this.elements[0].elementDescriptor.description);
+            this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/2, worldHeight - this.furnitureDescriptor.height - floor_height);
+         }else if(this.attachedElements == 2){
+            console.log("Room " + roomIndex + " Has furniture " + this.furnitureDescriptor.description +"+" + this.elements[0].elementDescriptor.description);
+            console.log("Room " + roomIndex + " Has furniture " + this.furnitureDescriptor.description +"+" + this.elements[1].elementDescriptor.description);
+            this.elements[0].draw(roomIndex * length_of_rooms + pxOffset + this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
+            this.elements[1].draw(roomIndex * length_of_rooms + pxOffset + 3*this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
+         } //Else, nothjing attached. Is one, or two.
+      } /**Else painting or rug, so no attached items**/
+      else if(this.furnitureDescriptor.yOffset == -1){
+         this.craftyEntity = Crafty.e("2D, DOM, Image")
+            .attr({
+               x: roomIndex * length_of_rooms + pxOffset, 
+               y: worldHeight - this.furnitureDescriptor.height, //-floor_height
+               w: this.furnitureDescriptor.width, 
+               h: this.furnitureDescriptor.height})
+            .image(this.furnitureDescriptor.imagefile);
+      }else{ //Painting
+         this.craftyEntity = Crafty.e("2D, DOM, Image")
+            .attr({
+               x: roomIndex * length_of_rooms + pxOffset, 
+               y: worldHeight - this.furnitureDescriptor.height - floor_height - 100, 
+               w: this.furnitureDescriptor.width, 
+               h: this.furnitureDescriptor.height})
+            .image(this.furnitureDescriptor.imagefile);
+       }
+      
       return this.furnitureDescriptor.width; //+ pxOffset;
    }
       
@@ -111,18 +134,22 @@ function Room(index){
       for(i = 0; i <  this.furniture.length; i++){
          totalFurnitureWidth += this.furniture[i].furnitureDescriptor.width;
       }
-     // alert("total furniture width for room " + this.index + ": " + totalFurnitureWidth);
+      // alert("total furniture width for room " + this.index + ": " + totalFurnitureWidth);
       spareSpace = length_of_rooms - totalFurnitureWidth;
       elementSpacing = spareSpace/(2 * (this.furniture.length + 2)); //+2 for start and end of room spacing
-     // alert("Per element space for room " + this.index + ": " + elementSpacing);
-     // alert("#furniture for room " + this.index + ": " + this.furniture.length);
+      // alert("Per element space for room " + this.index + ": " + elementSpacing);
+      // alert("#furniture for room " + this.index + ": " + this.furniture.length);
       randSpacePool = spareSpace/2;
       randSpace = Math.floor(Math.random()*(randSpacePool/(this.furniture.length - randPoolDraws)));
       randSpacePool -= randSpace;
-     //alert("Random draw space for room " + this.index + ": " + randSpace);
+      //alert("Random draw space for room " + this.index + ": " + randSpace);
+      /**End of random positioning code**/
+      
       
       var furniturePos = elementSpacing + randSpace;
       for(i = 0; i <  this.furniture.length; i++){
+         console.log("Room " + this.index + " Has furniture piece called " + this.furniture[i].furnitureDescriptor.description);
+      
          furniturePos+= this.furniture[i].draw(this.index,furniturePos); //move the position to draw furniture by this amount
          
          randSpace = Math.floor(Math.random()*(randSpacePool/(this.furniture.length - randPoolDraws)));

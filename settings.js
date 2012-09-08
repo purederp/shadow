@@ -8,4 +8,5 @@
  var player_height = 130;
  var player_width = 50;
  var floor_height = 67;
+ var player_floor_height = Math.floor(floor_height*2/3); //so he walk on the floor, not the skirting board
 /**END Game settings**/ 
