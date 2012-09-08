@@ -24,8 +24,8 @@
          /**Make rooms**/
          GenRooms(); //FUUUUUUUUUUUU
          
-         Crafty.sprite(135, "images/charSpriteSheet.jpg", {
-             player: [0, 0,player_width,player_height]
+         Crafty.sprite(135, "images/charRightSpriteSheet.png", {
+             player: [0, 0]
          });
          
          /**Player element**/
@@ -35,7 +35,7 @@
                      // .image("./images/char.gif")
                      .twoway(5,5) // horizontal speed, jump speed
                      .gravity("platform")
-                     .animate("playerWalk",0,0,3)
+                     .animate("playerWalk",0,0,3) //ROW, Start coloumn, End Coloumn
                      .animate("playerWalk",20,-1);
          //Make viewport follow player - Not placed in viewport as player object doesn't exist at that point.         
          Crafty.viewport.follow(player,10, height/2);
