@@ -1,7 +1,8 @@
 /** Game settings **/
- var number_of_rooms = 10;
+ var number_of_rooms = 11;
+ var number_of_event_rooms = number_of_rooms - 1;
  var length_of_rooms = 1200;
- var total_length = number_of_rooms * length_of_rooms;
+ var total_length = number_of_rooms * length_of_rooms + length_of_rooms; //For start and end of world fillers (length/2 each
  var height = 300;
  var worldHeight = height; //Should use this instead, less ambigous
  var viewport_width = 900;

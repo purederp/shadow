@@ -13,6 +13,10 @@
       <script type="text/javascript">
          var i = 0;
          var healthLevel = healthLevels-1;
+         
+         /**Game variables**/
+         var hasLeftFirstRoom = 0;  //what it sounds like
+         var hasMagicKey = 0;       //Player can re-enter first room. 
            
          /**Scene, vieport settings**/
          Crafty.init(total_length+length_of_rooms, height);
@@ -64,13 +68,29 @@
 						})
                      .gravity("platform")
                      .bind("EnterFrame", function() {
+                     /**Here is where we prevent the player walking off the ends of the world, and also mange trhe re-entry into the first room**/
+                     
+                        /**First, re-entry to first room*/
+                        if(player.x > length_of_rooms && hasLeftFirstRoom == 0){
+                           hasLeftFirstRoom = 1;
+                           slowDeath();
+                           window.setInterval("slowDeath()",1000);
+                        }
+                        /**Player has left the room, and cannot re enter**/
+                        if(player.x < length_of_rooms+10 && hasLeftFirstRoom == 1 && hasMagicKey ==0){
+                           player.x = length_of_rooms+10;
+	                        player.x = length_of_rooms+10 + 0;
+	                        spotlight.x = length_of_rooms+10 +  spotlightInitX ;
+                        }
+                        /**Else, character has not left the room, or they have the magic key, and are allowed back in**/
+                        
 	                     if(player.x < startBarrier){
 	                        player.x =  0 + startBarrier;
 	                        spotlight.x = spotlightInitX + startBarrier ;
 	                     }else
-	                     if(player.x > total_length - endBarrier){
-	                        player.x = total_length - endBarrier + 0;
-	                        spotlight.x = total_length - endBarrier +  spotlightInitX ;
+	                     if(player.x > total_length_usable - endBarrier){
+	                        player.x = total_length_usable - endBarrier + 0;
+	                        spotlight.x = total_length_usable - endBarrier +  spotlightInitX ;
 	                        
 	                     }
                      });
@@ -86,7 +106,8 @@
          /**End player**/
         
                    
-         /**The players 'health', ie, thier flashlight ability depletes over time....**/
+         /**The players 'health', ie, thier flashlight ability depletes over time....
+            This is triggered when the player leaves the **/
           function slowDeath(){
             var newHealthLevel = 0;
             playerHealth -= healthDepeletion;
@@ -99,8 +120,6 @@
                }
           }
           healthLevel = 9;
-          slowDeath();
-          window.setInterval("slowDeath()",1000);
           /**End player Health**/
             
 

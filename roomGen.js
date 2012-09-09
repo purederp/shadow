@@ -184,7 +184,8 @@ function GenRooms(){
    
    
    //Create a bunch of rooms. number of rooms to create defined in setting.js
-   for(i = 0; i < number_of_rooms; i++){
+   //don't generate starting room. (rooms[0])
+   for(i = 0+1; i < number_of_rooms ; i++){
       rooms[i] = new Room(i);
    }
    
@@ -192,7 +193,7 @@ function GenRooms(){
    //furniture
    for(i = 0; i < furnitureDescriptors.length ; i++){
       if(furnitureDescriptors[i].probability < 0){                //Probability <0 implies is a special item
-         var roomNum = Math.floor(Math.random() * number_of_rooms);
+         var roomNum = Math.floor(Math.random() * number_of_event_rooms+1);
          rooms[roomNum].furniture.push(new RoomFurniture(furnitureDescriptors[i]));
       }
    }
@@ -200,14 +201,14 @@ function GenRooms(){
    //elements
    for(i = 0; i < elementDescriptors.length ; i++){
       if(elementDescriptors[i].probability < 0){                //Probability <0 implies is a special item
-         var roomNum = Math.floor(Math.random() * number_of_rooms);
+         var roomNum = Math.floor(Math.random() * number_of_event_rooms+1);
          rooms[roomNum].elements.push(new RoomElement(elementDescriptors[i]));
          rooms[roomNum].spareElementPlaces--; //one less space an a desk, etc to sit.
       }
    }
    
    //Place normal furniture
-   for(i = 0; i < number_of_rooms; i++){
+   for(i = 0+1; i < number_of_event_rooms+1; i++){
       for(j = 0; j < furnitureDescriptors.length ; j++){
          if(furnitureDescriptors[j].probability > Math.random()){
             rooms[i].furniture.push(new RoomFurniture(furnitureDescriptors[j]));
@@ -250,6 +251,9 @@ function GenRooms(){
    rooms[i].draw();
    console.log("Drew room " +i + " Background is "+ rooms[i].background);
    }
+   rooms[0] = new Room(0);
+   rooms[0].draw();
+   console.log("Drew room 0");
 }
 
 
