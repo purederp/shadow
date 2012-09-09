@@ -47,7 +47,7 @@
                      .attr({x: 0, y: 0, w: player_width, h: player_height}) // for Component 2D
                      //.color("#FF0000") // for Component Color - replace with sprite
                      .image("./images/charIdleLeft.png")
-                     .twoway(10,5) // horizontal speed, jump speed
+                     .twoway(10,1) // horizontal speed, jump speed
 					 .bind("NewDirection",
 						 function (direction) {
 							 if (direction.x < 0) {
