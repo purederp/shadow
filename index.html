@@ -17,6 +17,11 @@
          /**Game variables**/
          var hasLeftFirstRoom = 0;  //what it sounds like
          var hasMagicKey = 0;       //Player can re-enter first room. 
+         /**Shadow monster variables. Should appear near edge of vision and creep towards the payer for a half a second, disappear for 2-10 seconds, and then reappear.
+            Disappearing is done by moving to x=10.**/
+         var shadowDirection = -1; //-1 = left, 1 = right, 0 = disappear
+         var shadowFramesLeft = 0; //10 - 40 frames. for l/r, 120-600 for disappeared 60 frames in a second.
+         var shadowSpeed = 0;
            
          /**Scene, vieport settings**/
          Crafty.init(total_length+length_of_rooms, height);
@@ -99,7 +104,43 @@
                      .attr({x: spotlightInitX, y: 0, w: viewport_width, h: worldHeight}) // for Component 2D
                      .twoway(playerSpeed,1) // horizontal speed, jump speed
                      .gravity("spotLightPlatform");
-                     
+             
+             
+                                     
+         var shadow = Crafty.e("2D, DOM, Image")
+                     .attr({x: -2000, y: worldHeight - floor_height - 200, w: 125, h: 200}) // for Component 2D
+                     .bind("EnterFrame", function() {
+                                                      if(hasLeftFirstRoom ==1){ 
+                                                         /**Shadow monster is go!**/
+                                                         // var shadowDirecton = -1; //-1 = left, 1 = right
+                                                         // var shadowFramesLeft = 0; //10 - 40 frames. 60 frames in a second.
+                                                         if(shadowFramesLeft > 0){
+                                                            shadow.x+=shadowSpeed*shadowDirection;
+                                                            shadowFramesLeft--;
+                                                         }else{
+                                                            if(shadowDirection != 0){
+                                                               shadowDirection = 0;
+                                                               shadowFramesLeft = Math.floor(120 + Math.random()*480); //wait 2-10s
+                                                               shadow.x = 10; //and hide
+                                                            }else{
+                                                               shadowSpeed = Math.floor(Math.random()*10);
+                                                               if(Math.random() > 0.5){
+                                                                  /**Left*/
+                                                                  shadowDirection = -1;
+                                                                  this.image("images/shadowWalkLeft.gif");
+                                                                  shadow.x = player.x + 150 + Math.floor(Math.random()*300);
+                                                                  shadowFramesLeft = 100 +Math.floor(Math.random()*30);
+                                                               }else{
+                                                                  /**right**/
+                                                                  shadowDirection = 1;
+                                                                  this.image("images/shadowWalkRight.gif");
+                                                                  shadow.x = player.x - 150 - Math.floor(Math.random()*300);
+                                                                  shadowFramesLeft = 100 +Math.floor(Math.random()*30);
+                                                               }
+                                                            }
+                                                         }
+                                                      } 
+                     });
          //Make viewport follow player - Not placed in viewport as player object doesn't exist at that point.         
          Crafty.viewport.follow(player,10, height/2);
          
