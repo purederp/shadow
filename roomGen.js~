@@ -2,6 +2,7 @@ var furnitureDescriptors = [];  //furniture Objects
 var elementDescriptors = [];   //in room Objects
 var backgrounds = [];//Files containing background images
 var rooms = [];      //Room objects
+var puzzleDescriptors = [];
 
 
 /**FIXME Possible problem, using i in a bunch of places that *may* be nested. Just a heads up for tomorrowUs**/

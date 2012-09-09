@@ -2,6 +2,7 @@ var furnitureDescriptors = [];  //furniture Objects
 var elementDescriptors = [];   //in room Objects
 var backgrounds = [];//Files containing background images
 var rooms = [];      //Room objects
+var puzzleDescriptors = [];
 
 
 /**FIXME Possible problem, using i in a bunch of places that *may* be nested. Just a heads up for tomorrowUs**/
@@ -16,6 +17,10 @@ function pick(arg, def) {
 }
 
 
+function puzzleDescriptor(description, phrase){
+	this.phrase = phrase;
+	this.description = description;
+}
 /**Descriptor for items free standing items**/
 /**yOffset is used for rugs & Paintings, to indicate something doesn't go against the wall. 0 is normal, -1 is down (rug), 1 is up (painting)**/
 function RoomFurnitureDescriptor(itemWidth,itemHeight,yOffset,description, imagefile, probability, holds){
