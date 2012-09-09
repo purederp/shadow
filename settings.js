@@ -14,4 +14,8 @@
  var healthLevels = 9; //Number of spotlight<x> files. don't prefix numbers with 0.
  var player_floor_height = Math.floor(floor_height*2/3); //so he walk on the floor, not the skirting board
  var drawMethod = " Canvas ";
+ 
+ var startBarrier = 5 ;//can't get closer than this to the start
+ var endBarrier = 50 ;//can't get closer than this to the end
+ var playerSpeed=30;
 /**END Game settings**/ 

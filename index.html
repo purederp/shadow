@@ -15,7 +15,7 @@
          var healthLevel = healthLevels-1;
            
          /**Scene, vieport settings**/
-         Crafty.init(total_length, height);
+         Crafty.init(total_length+length_of_rooms, height);
          Crafty.viewport.init(viewport_width, height);
          /**END scene**/
 
@@ -47,7 +47,7 @@
                      .attr({x: 0, y: 0, w: player_width, h: player_height}) // for Component 2D
                      //.color("#FF0000") // for Component Color - replace with sprite
                      .image("./images/charIdleLeft.png")
-                     .twoway(10,1) // horizontal speed, jump speed
+                     .twoway(playerSpeed,1) // horizontal speed, jump speed
 					 .bind("NewDirection",
 						 function (direction) {
 							 if (direction.x < 0) {
@@ -62,11 +62,22 @@
 									 this.image("./images/charIdleRight.png")
 							 }
 						})
-                     .gravity("platform");
-                                    
+                     .gravity("platform")
+                     .bind("EnterFrame", function() {
+	                     if(player.x < startBarrier){
+	                        player.x =  0 + startBarrier;
+	                        spotlight.x = spotlightInitX + startBarrier ;
+	                     }else
+	                     if(player.x > total_length - endBarrier){
+	                        player.x = total_length - endBarrier + 0;
+	                        spotlight.x = total_length - endBarrier +  spotlightInitX ;
+	                        
+	                     }
+                     });
+         var spotlightInitX = Math.floor(-450+player_width/2)                         
          var spotlight = Crafty.e("2D, DOM,player, Twoway, Gravity, Image")
-                     .attr({x: Math.floor(-450+player_width/2), y: 0, w: viewport_width, h: worldHeight}) // for Component 2D
-                     .twoway(10,1) // horizontal speed, jump speed
+                     .attr({x: spotlightInitX, y: 0, w: viewport_width, h: worldHeight}) // for Component 2D
+                     .twoway(playerSpeed,1) // horizontal speed, jump speed
                      .gravity("spotLightPlatform");
                      
          //Make viewport follow player - Not placed in viewport as player object doesn't exist at that point.         
@@ -79,7 +90,7 @@
           function slowDeath(){
             var newHealthLevel = 0;
             playerHealth -= healthDepeletion;
-            console.log("Health:" + playerHealth);
+            //console.log("Health:" + playerHealth);
             newHealthLevel = healthLevels -1 -Math.floor((playerHealth * healthLevels)/(initialHealth));
             if(newHealthLevel != healthLevel && playerHealth > 0){
                healthLevel = newHealthLevel;
