@@ -114,11 +114,16 @@ function Room(index){
    this.elements = [];
    this.spareElementPlaces = 0;
    this.craftyEntity = null; //Probably should hold on to this. Maybe destruct wehn the room leaves our view?
+   this.barrierCraftyEntity = null; //Fro the barrier at the start f the room
    this.draw = function(){
       //Draw background
       this.craftyEntity = Crafty.e("2D, " +drawMethod+",Image")
          .attr({x: this.index * length_of_rooms, y: 0, w: length_of_rooms, h: height})
          .image(this.background)
+      //Draw barrier
+      this.barrierCraftyEntity = Crafty.e("2D, " +drawMethod+",Image")
+         .attr({x: this.index * length_of_rooms, y: 0, w: 12, h: 245})
+         .image("./images/roomframe.png");
          
       /**For randomly placing furniture, we need ot know how much spare space we have.
          Will deidcate half of this to be minimum spacing between elements, and use the

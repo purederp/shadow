@@ -11,6 +11,7 @@
    <body>
       <script type="text/javascript">
          var i = 0;
+         var healthLevel = healthLevels-1;
            
          /**Scene, vieport settings**/
          Crafty.init(total_length, height);
@@ -21,44 +22,76 @@
          Crafty.viewport.mouselook(true);
          /**End debugging**/
          
+         
+         /**Sounds**/
+         Crafty.audio.add("main_Loop", "./sounds/main_Loop.mp3")
+         Crafty.audio.play("main_Loop", -1)
+         
          /**Bottom of world - stop us falling off**/
          var base = Crafty.e("2D, " +drawMethod+",Color, platform")
                      .attr({x: 0, y: worldHeight-player_floor_height, w: total_length, h:1})
                      .color("#DDDDDD");
+                     
+         //Spotlight maks has a lower platform.
+         var spotLightBase = Crafty.e("2D, " +drawMethod+",Color, spotLightPlatform")
+                     .attr({x: 0, y: worldHeight+1, w: total_length, h:1})
+                     .color("#DDDDDD");
          /**End bottom of world**/
          
          /**Make rooms**/
-         GenRooms(); //FUUUUUUUUUUUU
+         GenRooms(); 
          
-        // Crafty.sprite(135, "images/charRightSpriteSheet.png", {
-        //     player: [0, 0]
-        // });
-        // SpriteAnimation, 
          /**Player element**/
          var player = Crafty.e("2D, DOM,player, Twoway, Gravity, Image")
                      .attr({x: 0, y: 0, w: player_width, h: player_height}) // for Component 2D
                      //.color("#FF0000") // for Component Color - replace with sprite
-                      .image("./images/char.gif")
+                     .image("./images/charIdleLeft.png")
                      .twoway(10,5) // horizontal speed, jump speed
+					 .bind("NewDirection",
+						 function (direction) {
+							 if (direction.x < 0) {
+								 this.image("./images/charWalkLeft.gif")
+							 }
+							 if (direction.x > 0) {
+								 this.image("./images/charWalkRight.gif")
+							 }
+							 if(!direction.x && !direction.y) {
+								 this.image("./images/charIdleLeft.png")
+								 if(this.image("./images/charWalkRight.gif"))
+									 this.image("./images/charIdleRight.png")
+							 }
+						})
                      .gravity("platform");
-                   //  .animate("playerWalk",0,0,3) //ROW, Start coloumn, End Coloumn
-                   //  .animate("playerWalk",20,-1);
+                                    
+         var spotlight = Crafty.e("2D, DOM,player, Twoway, Gravity, Image")
+                     .attr({x: Math.floor(-450+player_width/2), y: 0, w: viewport_width, h: worldHeight}) // for Component 2D
+                     .twoway(10,1) // horizontal speed, jump speed
+                     .gravity("spotLightPlatform");
+                     
          //Make viewport follow player - Not placed in viewport as player object doesn't exist at that point.         
          Crafty.viewport.follow(player,10, height/2);
          
          /**End player**/
-         
-         
-              
-         /**More debugging stuff   **/    
-         /** var markerblocks[];
-         for(i = 0; i *100 < total_length ;i++ ){
-         Crafty.e("2D, " +drawMethod+",Color")
-                   .attr({x: i * 100 , y: 140, w: 20, h: 20}) // for Component 2D
-                   .color("#111100"); // for Component Color
-                   //.gravity("platform");
-         }
-         **/
+        
+                   
+         /**The players 'health', ie, thier flashlight ability depletes over time....**/
+          function slowDeath(){
+            var newHealthLevel = 0;
+            playerHealth -= healthDepeletion;
+            console.log("Health:" + playerHealth);
+            newHealthLevel = healthLevels -1 -Math.floor((playerHealth * healthLevels)/(initialHealth));
+            if(newHealthLevel != healthLevel && playerHealth > 0){
+               healthLevel = newHealthLevel;
+               var imagefile = "./images/spotlight/spotlight" + healthLevel + ".png";
+               spotlight.image(imagefile);
+               }
+          }
+          healthLevel = 9;
+          slowDeath();
+          window.setInterval("slowDeath()",1000);
+          /**End player Health**/
+            
+
 	   </script>
          
    
