@@ -68,11 +68,11 @@ function RoomFurniture(item){
             this.elements[1].draw(roomIndex * length_of_rooms + pxOffset + 3*this.furnitureDescriptor.width/4, worldHeight - this.furnitureDescriptor.height - floor_height);
          } //Else, nothjing attached. Is one, or two.
       } /**Else painting or rug, so no attached items**/
-      else if(yOffset == -1){
+      else if(this.furnitureDescriptor.yOffset == -1){
          this.craftyEntity = Crafty.e("2D, DOM, Image")
             .attr({
                x: roomIndex * length_of_rooms + pxOffset, 
-               y: worldHeight - this.furnitureDescriptor.height, //-floor_height
+               y: worldHeight - this.furnitureDescriptor.height-15, //-floor_height
                w: this.furnitureDescriptor.width, 
                h: this.furnitureDescriptor.height})
             .image(this.furnitureDescriptor.imagefile);

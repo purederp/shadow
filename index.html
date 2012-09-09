@@ -21,6 +21,12 @@
          Crafty.viewport.mouselook(true);
          /**End debugging**/
          
+         /**Bottom of world - stop us falling off**/
+         var base = Crafty.e("2D, " +drawMethod+",Color, platform")
+                     .attr({x: 0, y: worldHeight-player_floor_height, w: total_length, h:1})
+                     .color("#DDDDDD");
+         /**End bottom of world**/
+         
          /**Make rooms**/
          GenRooms(); //FUUUUUUUUUUUU
          
@@ -33,7 +39,7 @@
                      .attr({x: 0, y: 0, w: player_width, h: player_height}) // for Component 2D
                      //.color("#FF0000") // for Component Color - replace with sprite
                       .image("./images/char.gif")
-                     .twoway(100,5) // horizontal speed, jump speed
+                     .twoway(10,5) // horizontal speed, jump speed
                      .gravity("platform");
                    //  .animate("playerWalk",0,0,3) //ROW, Start coloumn, End Coloumn
                    //  .animate("playerWalk",20,-1);
@@ -43,16 +49,11 @@
          /**End player**/
          
          
-         /**Bottom of world - stop us falling off**/
-         var base = Crafty.e("2D, DOM, Color, platform")
-                     .attr({x: 0, y: worldHeight-player_floor_height, w: total_length, h:1})
-                     .color("#DDDDDD");
-         /**End bottom of world**/
               
          /**More debugging stuff   **/    
          /** var markerblocks[];
          for(i = 0; i *100 < total_length ;i++ ){
-         Crafty.e("2D, DOM, Color")
+         Crafty.e("2D, " +drawMethod+",Color")
                    .attr({x: i * 100 , y: 140, w: 20, h: 20}) // for Component 2D
                    .color("#111100"); // for Component Color
                    //.gravity("platform");
